@@ -13,12 +13,12 @@ git clone https://github.com/PaulsBecks/urhs
 
 2. Start your server
 ```
-cd urhs/ && npm run example //replace this with your own 
+cd urhs/ && npm run example  # replace this with your own 
 ```
 
 3. Start URHS Client in another terminal
 ```
-npm run start 9000 //or whatever port your server is running on
+npm run start 9000  # or whatever port your local server is running on
 ```
 
 Profit. 

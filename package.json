@@ -1,0 +1,13 @@
+{
+  "name": "urhs-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node index.js",
+    "example":"node example_server.js"
+  },
+  "author": "Paul David Beck",
+  "license": "MIT",
+  "dependencies": {}
+}

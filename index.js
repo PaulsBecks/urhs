@@ -1,6 +1,10 @@
 var net = require("net");
 
-const LOCAL_SERVER_PORT = process.argv[2];
+const LOCAL_SERVER_PORT = process.argv[2] || process.env.PORT;
+if (!LOCAL_SERVER_PORT) {
+  console.log("Please specify the local port number.");
+  process.exit();
+}
 const REMOTE_SERVER_HOST = process.argv[3] || "urhs.online";
 const REMOTE_SERVER_PORT = process.argv[4] || 1995;
 
@@ -10,17 +14,16 @@ var lastRemoteConnection;
 
 const activeStreams = {};
 
-
 /**
-* This function removes an additional header from the received data.
-*/
+ * This function removes an additional header from the received data.
+ */
 function removeMultistreamHeader(data) {
   return [data.slice(0, 2).readUInt16BE(0), data.slice(2, data.length)];
 }
 
 /**
-* This function adds an additional header to the connection to handle multiple streams
-*/
+ * This function adds an additional header to the connection to handle multiple streams
+ */
 function addMultistreamHeader(data, streamNumber) {
   //create header
   const multistreamHeader = Buffer.alloc(2);
@@ -31,9 +34,9 @@ function addMultistreamHeader(data, streamNumber) {
 }
 
 /**
-* This function handles the connection to the local server, sets up connection listeners 
-* and forward the data from the local socket to the remote server.
-*/
+ * This function handles the connection to the local server, sets up connection listeners
+ * and forward the data from the local socket to the remote server.
+ */
 function connectToTarget(remote, streamNumber) {
   const target = net.createConnection(LOCAL_SERVER_PORT, "localhost");
 
@@ -68,9 +71,9 @@ function connectToTarget(remote, streamNumber) {
 }
 
 /**
-* This function handles the connection to the remote server sets up listeners on the connection
-* and forwards the data from the remote connection to the local one.
-*/
+ * This function handles the connection to the remote server sets up listeners on the connection
+ * and forwards the data from the remote connection to the local one.
+ */
 function connectToRemote() {
   if (!shouldReconnectRemote) {
     return;
@@ -88,7 +91,7 @@ function connectToRemote() {
       if (dataChunks[1]) secret = dataChunks[1];
       if (subdomain !== lastSubdomain) {
         console.log("Your domain:", "http://" + subdomain + ".urhs.online");
-        console.log("Secret: ", secret);
+        //console.log("Secret: ", secret);
       }
       lastSubdomain = subdomain;
     } else {
@@ -113,8 +116,8 @@ function connectToRemote() {
 connectToRemote();
 
 /**
-* To kill the process with STR-C
-*/
+ * To kill the process with STR-C
+ */
 process.on("SIGINT", function() {
   console.log("Caught interrupt signal");
   shouldReconnectRemote = false;

@@ -1,11 +1,15 @@
 {
-  "name": "urhs-client",
+  "name": "urhs",
+  "homepage": "https://www.urhs.online",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the client stub to connect to the urhs.online server.",
   "main": "main.js",
   "scripts": {
     "start": "node index.js",
-    "example":"node example_server.js"
+    "example": "node example_server.js"
+  },
+  "bin": {
+    "urhs": "./cli.js"
   },
   "author": "Paul David Beck",
   "license": "MIT",

@@ -8,6 +8,10 @@ You need one thing though, [Node JS](https://github.com/nodejs/node). We can get
 
 ## Getting startet
 
+### With Npx
+```
+npx urhs <Port-of-local-service>
+```
 ### Global Npm Install
 
 ```
